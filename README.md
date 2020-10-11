@@ -10,6 +10,10 @@ To Run the APP <br >
 1.yarn install <br >
 2.yarn start to start server <br >
 3.yarn android to start server in android emulator <br >
-4.yarn ios to start server in iOS simulator
+4.yarn ios to start server in iOS simulator <br >
+
+This app contains JWT authentication for Sign Up and SignIn process
+
+
 
 #You need to have expo to run the app
