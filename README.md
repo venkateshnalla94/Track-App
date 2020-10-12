@@ -12,6 +12,18 @@ To Run the APP <br >
 3.yarn android to start server in android emulator <br >
 4.yarn ios to start server in iOS simulator <br >
 
+For Temporary deployment of the server we are using ngrok <br >
+so run
+ngrok http 3000
+(if your server port is running at 3000)
+
+Every time if you run ngrok, please change the baseUrl in src/api/tracker.js
+currently .env files are not introduced.
+
+#Server Code Available at 
+
+https://github.com/venkateshnalla94/Express-Maps.git
+
 This app contains JWT authentication for Sign Up and SignIn process
 
 
