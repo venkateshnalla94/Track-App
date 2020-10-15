@@ -3,6 +3,8 @@ import trackerApi from "../api/tracker";
 import axios from 'axios';
 const authReducer = (state, action) => {
      switch (action.type) {
+          case 'add_error':
+               return {...state,errorMessage:action.payload}
           default:
                return state;
      }
@@ -18,17 +20,12 @@ const signUp=(dispatch)=>{
           /**
            * TODO: - Resolve Fetch and axios error
            */
-          console.log("reached")
           try{
-               const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-                    method: 'GET',
-                    //Request Type
-               })
-               //const response = await trackerApi.post('/signup', { email, password });
-               //const response = await trackerApi.get('/', );
-               console.log(response);
+               const response = await trackerApi.post('/signup',{email,password} );
+               console.log(response.data);
           }catch (e) {
                console.log(e.message)
+               dispatch({type:'add_error',payload:'Something wrong with Sign UP'})
           }
      }
 }
@@ -52,5 +49,5 @@ const signOut=(dispatch)=>{
 export const { Provider, Context } = createDataContext(
      authReducer,
      {signIn,signOut,signUp },
-     { isSignedIn:false }
+     { isSignedIn:false,errorMessage:'' }
 );
