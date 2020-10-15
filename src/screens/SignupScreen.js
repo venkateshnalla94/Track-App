@@ -30,7 +30,7 @@ const SignupScreen=({navigation})=>{
                />
                <Spacer>
                     <Button title={'Sign Up'} onPress={()=>{
-                         signUp(email,password)
+                         signUp({email,password})
                     }}/>
                </Spacer>
                

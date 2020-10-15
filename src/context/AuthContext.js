@@ -18,18 +18,9 @@ const signUp=(dispatch)=>{
           /**
            * TODO: - Resolve Fetch and axios error
            */
-          console.log("reached")
           try{
-               
-               //const response = await trackerApi.post('/signup', { email, password });
-               const response = await trackerApi.post('/signin',{
-                    body:{
-                         "email":"venkateshnalla@gmail.com",
-                         "password":"Venky@007"
-                    }
-               } );
-               console.log(response.data)
-               
+               const response = await trackerApi.post('/signup',{email,password} );
+               console.log(response.data);
           }catch (e) {
                console.log(e.message)
           }
