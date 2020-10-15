@@ -3,6 +3,8 @@ import trackerApi from "../api/tracker";
 import axios from 'axios';
 const authReducer = (state, action) => {
      switch (action.type) {
+          case 'add_error':
+               return {...state,errorMessage:action.payload}
           default:
                return state;
      }
@@ -23,6 +25,7 @@ const signUp=(dispatch)=>{
                console.log(response.data);
           }catch (e) {
                console.log(e.message)
+               dispatch({type:'add_error',payload:'Something wrong with Sign UP'})
           }
      }
 }
@@ -46,5 +49,5 @@ const signOut=(dispatch)=>{
 export const { Provider, Context } = createDataContext(
      authReducer,
      {signIn,signOut,signUp },
-     { isSignedIn:false }
+     { isSignedIn:false,errorMessage:'' }
 );

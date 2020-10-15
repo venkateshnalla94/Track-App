@@ -8,7 +8,6 @@ const SignupScreen=({navigation})=>{
      const [email,setEmail]=useState('');
      const [password,setPassword]=useState('');
      const {state,signUp}=useContext(AuthContext);
-     
      return (
           <View style={styles.parentStyle}>
                <Text style={styles.headerStyle} h4>Sign Up For Tracker</Text>
@@ -28,6 +27,10 @@ const SignupScreen=({navigation})=>{
                     value={password}
                     onChangeText={setPassword}
                />
+               {state.errorMessage?
+                    <Text
+                      style={styles.errMsg}   >{state.errorMessage}
+                    </Text>:null}
                <Spacer>
                     <Button title={'Sign Up'} onPress={()=>{
                          signUp({email,password})
@@ -53,6 +56,12 @@ const styles=StyleSheet.create({
           flex:1,
           justifyContent:'center',
           marginBottom:150
+     },
+     errMsg:{
+          fontSize:16,
+          color:'red',
+          marginLeft:15,
+          marginTop:15
      }
 })
 
