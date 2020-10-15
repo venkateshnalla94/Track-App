@@ -20,13 +20,16 @@ const signUp=(dispatch)=>{
            */
           console.log("reached")
           try{
-               const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-                    method: 'GET',
-                    //Request Type
-               })
+               
                //const response = await trackerApi.post('/signup', { email, password });
-               //const response = await trackerApi.get('/', );
-               console.log(response);
+               const response = await trackerApi.post('/signin',{
+                    body:{
+                         "email":"venkateshnalla@gmail.com",
+                         "password":"Venky@007"
+                    }
+               } );
+               console.log(response.data)
+               
           }catch (e) {
                console.log(e.message)
           }
