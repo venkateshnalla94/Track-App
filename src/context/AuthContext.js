@@ -1,6 +1,7 @@
 import createDataContext from './createDataContext';
 import trackerApi from "../api/tracker";
 import {AsyncStorage} from "react-native";
+import {navigate} from "../navigationRef";
 import axios from 'axios';
 const authReducer = (state, action) => {
      switch (action.type) {
@@ -25,10 +26,12 @@ const signUp=(dispatch)=>{
            * TODO: - Resolve Fetch and axios error
            */
           try{
-               console.log("Reached")
+               console.log("Reached",email,password)
+               
                const response = await trackerApi.post('/signup', { email, password });
                await AsyncStorage.setItem('token', response.data.JWTToken);
                dispatch({ type: 'signup', payload: response.data.token });
+               navigate('TrackList')
                console.log(response.data);
           }catch (e) {
                console.log(e.message)
