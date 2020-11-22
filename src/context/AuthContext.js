@@ -50,7 +50,7 @@ const signIn=(dispatch)=>async ({email,password})=>{
                const response = await trackerApi.post('/signin', { email, password });
                await AsyncStorage.setItem('token', response.data.JWTToken);
                dispatch({ type: 'signin', payload: response.data.token });
-               navigate('TrackList')
+               navigate('TrackList');
           }catch (e) {
                console.log(e.message)
                dispatch({type:'add_error',payload:'Something wrong with Sign UP'})
@@ -68,8 +68,18 @@ const signOut=(dispatch)=>{
 const clearErrorMessage = dispatch => () => {
      dispatch({ type: 'clear_error_message' });
 };
+const tryLocalSignin= dispatch =>async ()=>{
+     const token=await AsyncStorage.getItem('token');
+     if(token){
+          dispatch({ type: 'signin',payload:'token' });
+          navigate('TrackList');
+     }else{
+          navigate('Signup');
+     }
+}
+
 export const { Provider, Context } = createDataContext(
      authReducer,
-     {signIn,signOut,signUp,clearErrorMessage },
+     {signIn,signOut,signUp,clearErrorMessage,tryLocalSignin },
      {errorMessage:'',token:null,}
 );
