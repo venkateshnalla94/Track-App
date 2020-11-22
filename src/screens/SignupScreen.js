@@ -1,42 +1,18 @@
-import React,{useState,useContext} from 'react' ;
-import {View,StyleSheet,} from "react-native";
-import {Text,Input,Button} from 'react-native-elements'
-import Spacer from "../components/Spacer";
+import React, { useContext} from 'react' ;
+import {View, StyleSheet} from "react-native";
 import {Context as AuthContext} from "../context/AuthContext";
-
+import AuthForm from "../components/AuthForm";
+import NavLink from "../components/NavLink";
 const SignupScreen=({navigation})=>{
-     const [email,setEmail]=useState('');
-     const [password,setPassword]=useState('');
+     
      const {state,signUp}=useContext(AuthContext);
      return (
           <View style={styles.parentStyle}>
-               <Text style={styles.headerStyle} h4>Sign Up For Tracker</Text>
-               <Input
-                    autoCapitalize={'none'}
-                    autoCorrect={false}
-                    label={'Email'}
-                    value={email}
-                    onChangeText={setEmail}
-               />
-               <Spacer/>
-               <Input
-                    secureTextEntry={true}
-                    autoCapitalize={'none'}
-                    autoCorrect={false}
-                    label={'Password'}
-                    value={password}
-                    onChangeText={setPassword}
-               />
-               {state.errorMessage?
-                    <Text
-                      style={styles.errMsg}   >{state.errorMessage}
-                    </Text>:null}
-               <Spacer>
-                    <Button title={'Sign Up'} onPress={()=>{
-                         signUp({email,password})
-                    }}/>
-               </Spacer>
-               
+               <AuthForm headerText={"Sign Up for Tracker"}
+                         onSubmit={signUp}
+                         errMessage={state.errorMessage}
+                         submitButton={"Sign Up"}/>
+               <NavLink routeName={'Signin'} text={'Already have an Account! Sign In '}/>
                {/*<Button title={'Main Flow'} onPress={()=>{navigation.navigate('mainFlow')}}/>*/}
           </View>
      )
@@ -62,6 +38,9 @@ const styles=StyleSheet.create({
           color:'red',
           marginLeft:15,
           marginTop:15
+     },
+     link:{
+          color:"blue"
      }
 })
 

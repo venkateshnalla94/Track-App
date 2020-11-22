@@ -1,10 +1,15 @@
 import createDataContext from './createDataContext';
 import trackerApi from "../api/tracker";
+import {AsyncStorage} from "react-native";
+import {navigate} from "../navigationRef";
 import axios from 'axios';
 const authReducer = (state, action) => {
      switch (action.type) {
           case 'add_error':
-               return {...state,errorMessage:action.payload}
+               return {...state,errorMessage:action.payload};
+          case 'signup':{
+               return {errorMessage:'',token:action.payload}
+          }
           default:
                return state;
      }
@@ -21,7 +26,12 @@ const signUp=(dispatch)=>{
            * TODO: - Resolve Fetch and axios error
            */
           try{
-               const response = await trackerApi.post('/signup',{email,password} );
+               console.log("Reached",email,password)
+               
+               const response = await trackerApi.post('/signup', { email, password });
+               await AsyncStorage.setItem('token', response.data.JWTToken);
+               dispatch({ type: 'signup', payload: response.data.token });
+               navigate('TrackList')
                console.log(response.data);
           }catch (e) {
                console.log(e.message)
@@ -49,5 +59,5 @@ const signOut=(dispatch)=>{
 export const { Provider, Context } = createDataContext(
      authReducer,
      {signIn,signOut,signUp },
-     { isSignedIn:false,errorMessage:'' }
+     {errorMessage:'',token:null,}
 );
