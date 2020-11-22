@@ -10,6 +10,11 @@ const authReducer = (state, action) => {
           case 'signup':{
                return {errorMessage:'',token:action.payload}
           }
+          case 'signin':{
+               return {errorMessage:'',token:action.payload}
+          }
+          case 'clear_error_message':
+               return { ...state, errorMessage: '' };
           default:
                return state;
      }
@@ -39,14 +44,18 @@ const signUp=(dispatch)=>{
           }
      }
 }
-const signIn=(dispatch)=>{
-     return ({email,password})=>{
-          /**
-           * TODO: -Make an API call to the server for siginingin
-           * if success ,then authenicate user
-           * else reflect error and request again for signin
-           */
-     }
+const signIn=(dispatch)=>async ({email,password})=>{
+          
+          try{
+               const response = await trackerApi.post('/signin', { email, password });
+               await AsyncStorage.setItem('token', response.data.JWTToken);
+               dispatch({ type: 'signin', payload: response.data.token });
+               navigate('TrackList')
+          }catch (e) {
+               console.log(e.message)
+               dispatch({type:'add_error',payload:'Something wrong with Sign UP'})
+          }
+     
 }
 
 const signOut=(dispatch)=>{
@@ -56,8 +65,11 @@ const signOut=(dispatch)=>{
            */
      }
 }
+const clearErrorMessage = dispatch => () => {
+     dispatch({ type: 'clear_error_message' });
+};
 export const { Provider, Context } = createDataContext(
      authReducer,
-     {signIn,signOut,signUp },
+     {signIn,signOut,signUp,clearErrorMessage },
      {errorMessage:'',token:null,}
 );

@@ -3,17 +3,20 @@ import {View, StyleSheet} from "react-native";
 import {Context as AuthContext} from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
+import {NavigationEvents} from "react-navigation";
 const SignupScreen=({navigation})=>{
      
-     const {state,signUp}=useContext(AuthContext);
+     const {state,signUp,clearErrorMessage}=useContext(AuthContext);
      return (
           <View style={styles.parentStyle}>
+               <NavigationEvents
+                    onWillBlur={clearErrorMessage}
+               />
                <AuthForm headerText={"Sign Up for Tracker"}
                          onSubmit={signUp}
                          errMessage={state.errorMessage}
                          submitButton={"Sign Up"}/>
                <NavLink routeName={'Signin'} text={'Already have an Account! Sign In '}/>
-               {/*<Button title={'Main Flow'} onPress={()=>{navigation.navigate('mainFlow')}}/>*/}
           </View>
      )
 }
